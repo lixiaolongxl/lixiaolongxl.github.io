@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="./css/common.css" />
+</head>
+<body>
+	<div class="containers">
+		<!--<button class="Loginout">退出</button>-->
+		<div class="index-main" id="body"></div>
+	</div>
+</body>
+<script type="text/javascript">
+    var urlData = urlData;
+	// window.onload=function(){
+    //
+	//     $('.Loginout').click(function(){
+     //        var data={
+     //            username:getCookie('username')
+     //        }
+     //        $.ajax({
+     //            url:urlData.computerLogout,
+     //            type:'post',
+     //            //dataType:'json',
+     //            data:JSON.stringify(data),
+     //            contentType:'application/json;charset=utf-8',
+     //            async:false,
+     //            error:function(){
+     //                alert('服务器异常');
+     //            },
+     //            success:function(str){
+     //                if(str.code==0){
+     //                    //window.history.go(-1);
+     //                    window.location.href = 'login.html';
+     //                }else {
+     //                    //alert(str.message);
+     //                    return;
+	// 				}
+     //            }
+     //        })
+	// 	})
+	// }
+    /*
+    获取cookie
+    */
+    function getCookie(c_name){
+        if(document.cookie.length>0){
+            c_start=document.cookie.indexOf(c_name + "=")
+            if(c_start!=-1){
+                c_start=c_start + c_name.length+1
+                c_end=document.cookie.indexOf(";",c_start)
+                if(c_end==-1) c_end=document.cookie.length
+                return unescape(document.cookie.substring(c_start,c_end));
+            }
+        }
+        return ""
+    }
+    var fileList=[];
+	var loadingFixed = '<div id="loadId" class="sq710-mask-root"><div class="sq710-mask-bg2"></div><div class="loading-move"></div></div>';
+</script>
+<script language="javascript" src="./js/lib/jquery-1.8.1.js"></script>
+<script language="javascript" src="./js/lib/jquery.form.js"></script>
+<script language="javascript" src="./js/lib/we.js"></script>
+<script language="javascript" src="./js/lib/util.js"></script>
+<script src="./js/config.js"></script>
+<script language="javascript" src="./js/page/page.js"></script>
+<script language="javascript" src="./js/page/detail.js"></script>
+<script language="javascript" src="./js/control.js"></script>
+</html>

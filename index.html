@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>地图</title>
+    <style type="text/css">
+        body,html,#container{
+            height: 100%;
+            margin: 0px;
+        }
+        .amap-logo img {
+            display: none;
+        }
+        .amap-copyright{
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+<div id="container" tabindex="0"></div>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=ba5bd46a6148130945f544073a228ddb"></script>
+<script type="text/javascript">
+    const map = new AMap.Map('container',{
+        resizeEnable: true,
+        zoom: 15,
+        // center: [116.480983, 40.0958]
+    });
+    AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.Geolocation'],
+        function(){
+            map.addControl(new AMap.ToolBar());
+
+            map.addControl(new AMap.Scale());
+
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+                convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                showButton: true,        //显示定位按钮，默认：true
+                buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+                buttonOffset: new AMap.Pixel(10, 50),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+                showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+                panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+                zoomToAccuracy:true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            });
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', function(str){
+                map.clearMap();
+                if(str.info ==='SUCCESS'){
+                    let pos=str.position;
+
+                    AMap.service(["AMap.PlaceSearch"], function() {
+                        var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+                            pageSize: 10,
+                            pageIndex: 1,
+                            map: map,
+                        });
+                        //关键字查询
+                        // placeSearch.search('酒店');
+                        placeSearch.searchNearBy('卫生间',pos,2000,function(status,result){
+                            if(result.info ==='OK'){
+                                var postion = result.poiList.pois;
+                            }
+                        });
+                        // AMap.event.addListener(placeSearch,'complete',function(data){
+                        //     debugger;
+                        // })
+                    });
+
+                }
+            });//返回定位信息
+            AMap.event.addListener(geolocation, 'error', function(err){
+                alert('定位失败，请开启定位服务')
+            });      //返回定位出错信息
+
+
+        });
+
+
+</script>
+</body>
+</html>

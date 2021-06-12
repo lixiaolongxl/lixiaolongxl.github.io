@@ -1,0 +1,8 @@
+#app .hero img {
+    border-radius: 50%;
+}
+#app .navbar .site-name {
+    padding-left: 50px;
+    background: url('/img/logo.jpeg') left center no-repeat;
+    background-size: 35px 35px;
+}
